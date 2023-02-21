@@ -5,33 +5,32 @@
 import requests
 import sys
 
-""" Import libraries """
+def main():
+    """Main Function"""
+    user_id = int(sys.argv[1])
+    todo_url = 'https://jsonplaceholder.typicode.com/todos'
+    user_url = 'https://jsonplaceholder.typicode.com/users/{}'.format(user_id)
+
+    response = requests.get(todo_url)
+
+    total_questions = 0
+    complete = []
+    for todo in response.json():
+
+        if todo['userID'] == user_id:
+            total_questions += 1
+
+            if todo['completed']:
+                completed.append(todo['title'])
+
+    user_name = requests.get(user_url).json()['name']
+
+    printer = ("Employee {} is done with tasks({}/{})".format(user_name,
+                len(cmpleted), total_questions))
+    print(printer)
+    for q in completed:
+        print("\t {}".format(q))
+
 
 if __name__ == "__main__":
-    user_id = int(sys.argv[1])
-    todos_url = "https://jsonplaceholder.typicode.com/todos"
-    users_url = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
-
-    todo_data = requests.get(todos_url).json()
-
-    employee_name = requests.get(users_url).json()["name"]
-
-    total_user_todos = 0
-    completed_todos = 0
-    titles = []
-    for todo in todo_data:
-        #Checks if the user_id is the same input as parameter
-        if user_id == todo["userId"]:
-            #get the total number of todos
-            totoal_user_todos += 1
-            #Get the total number of completed tasks
-            if todo["completed"]:
-                completed_todos += 1
-                #Get the titles of the completed tasks
-                titles.append(todo["title"])
-
-    print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name, completed_todos, total_user_todos))
-
-    for title in titles:
-        print("\t {}".format(title))
+    main()
