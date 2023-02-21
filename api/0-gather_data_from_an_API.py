@@ -5,6 +5,7 @@
 import requests
 import sys
 
+
 def main():
     """Main Function"""
     user_id = int(sys.argv[1])
